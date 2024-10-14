@@ -22,8 +22,12 @@ public class UserEntity {
 
     @NotNull
     private String contraseña;
+
     private Long edad;
+
     private Date fecha_creacion;
+
+    private boolean enable;
 
     public String getId() {
         return id_usuario;
@@ -72,5 +76,14 @@ public class UserEntity {
     public void setFecha_creacion(Date fecha_creacion) {
         this.fecha_creacion = fecha_creacion;
     }
+
+    public boolean isEnable() {
+        return enable;
+    }
+    
+    public void setEnable(boolean enable) {
+        this.enable = enable;
+    }
+    
     
 }
