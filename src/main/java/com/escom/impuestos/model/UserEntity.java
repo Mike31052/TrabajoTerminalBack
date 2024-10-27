@@ -29,6 +29,8 @@ public class UserEntity {
 
     private boolean enable;
 
+    private String regimen;
+
     public String getId() {
         return id_usuario;
     }
@@ -36,6 +38,14 @@ public class UserEntity {
     public void setId(String id_usuario) {
         this.id_usuario = id_usuario;
     }
+
+    public String getRegimen() {
+        return regimen;
+    }
+    
+    public void setRegimen(String regimen) {
+        this.regimen = regimen;
+    }    
     
     public String getNombre() {
         return nombre;

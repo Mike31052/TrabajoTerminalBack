@@ -8,11 +8,14 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.escom.impuestos.model.UserEntity;
 import com.escom.impuestos.model.VerificationTokenEntity;
 import com.escom.impuestos.repository.UserRepository;
 import com.escom.impuestos.repository.VerificationTokenRepository;
+
+import jakarta.persistence.EntityNotFoundException;
 
 @Service
 public class UserService {
@@ -135,5 +138,20 @@ public class UserService {
         tokenRepository.delete(verificationToken);
 
         return true;
+    }
+
+    @Transactional
+    public UserEntity actualizarRegimen(UserEntity user) {
+        // Buscar al usuario en la base de datos para verificar si existe
+        Optional<UserEntity> userExist = userRepository.findById(user.getId());
+        if (userExist.isPresent()) {
+            // Si el usuario existe, actualizar sus datos, incluido el régimen
+            UserEntity usuarioActualizado = userExist.get();
+            usuarioActualizado.setRegimen(user.getRegimen());
+            // Aquí puedes actualizar otros atributos si lo necesitas
+            return userRepository.save(usuarioActualizado);  // Guardar cambios
+        } else {
+            throw new EntityNotFoundException("Usuario no encontrado");
+        }
     }
 }

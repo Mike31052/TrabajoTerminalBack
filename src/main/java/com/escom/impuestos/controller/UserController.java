@@ -11,7 +11,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -45,7 +47,7 @@ public class UserController {
     @PostMapping("/create")
     public ResponseEntity<?> createUser(@RequestBody UserEntity user) {
         try {
-            UserEntity newUser = userService.createUser(user);
+            userService.createUser(user);
             return new ResponseEntity<>(Map.of("success", true, "message", "Usuario creado. Por favor, verifica tu correo electrónico."), HttpStatus.CREATED);
         } catch (IllegalArgumentException e) {
             return new ResponseEntity<>(Map.of("success", false, "message", e.getMessage()), HttpStatus.BAD_REQUEST);
@@ -103,5 +105,11 @@ public class UserController {
         } else {
             return ResponseEntity.ok(Map.of("success", false, "message", "Token inválido o caducado"));
         }
+    }
+
+    @PutMapping("/updateRegimen")
+    public ResponseEntity<String> actualizarRegimen(@RequestBody UserEntity user) {
+        userService.actualizarRegimen(user);
+        return ResponseEntity.ok("Regimen actualizado correctamente");
     }
 }
