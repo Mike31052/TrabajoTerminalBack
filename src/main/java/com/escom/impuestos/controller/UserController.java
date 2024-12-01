@@ -108,8 +108,8 @@ public class UserController {
     }
 
     @PutMapping("/updateRegimen")
-    public ResponseEntity<String> actualizarRegimen(@RequestBody UserEntity user) {
-        userService.actualizarRegimen(user);
-        return ResponseEntity.ok("Regimen actualizado correctamente");
+    public ResponseEntity<?> actualizarRegimen(@RequestBody UserEntity user) {
+        UserEntity userUpdated = userService.actualizarRegimen(user);
+        return ResponseEntity.ok(Map.of("success", true, "user", userUpdated));
     }
 }
